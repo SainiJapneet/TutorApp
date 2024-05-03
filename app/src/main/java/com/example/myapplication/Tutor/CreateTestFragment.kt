@@ -100,6 +100,7 @@ class CreateTestFragment : Fragment(),  QuestionAdapter.onclickListner {
     }
 
     override fun onSaveClicked(
+        position: Int,
         question: String,
         option1: String,
         option2: String,
@@ -110,19 +111,23 @@ class CreateTestFragment : Fragment(),  QuestionAdapter.onclickListner {
     ) {
         if(question != "" && option1 != "" && option2 != "" && option3 != "" && option4 != "" && answer != "" && marks != "" ) {
             val newQuestion = DataModel.Question(
-                "",
+                "${position}",
                 question,
                 listOf(option1, option2, option3, option4),
                 answer,
                 marks.toInt()
             )
-           // viewModel.addQuestion(newQuestion)
-            questionsList.add(newQuestion)
+
+            val existingQuestion = questionsList.find { it.questionId == newQuestion.questionId }
+            if (existingQuestion == null) {
+                questionsList.add(newQuestion)
+            } else {
+                existingQuestion.text = question
+                existingQuestion.options = listOf(option1, option2, option3, option4)
+                existingQuestion.correctOption = answer
+                existingQuestion.marks = marks.toInt()
+            }
         }
-        //viewModel.addQuestion(newQuestion)
     }
 
-    override fun onEditClicked(position:Int) {
-        questionsList.removeAt(position)
-    }
 }

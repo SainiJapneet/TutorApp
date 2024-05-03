@@ -61,9 +61,9 @@ object DataModel{
 
     data class Question(
         var questionId: String,
-        val text: String,
-        val options: List<String>,
-        val correctOption: String,
-        val marks: Int
+        var text: String,
+        var options: List<String>,
+        var correctOption: String,
+        var marks: Int
     )
 }
